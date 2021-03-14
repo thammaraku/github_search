@@ -4,6 +4,9 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
+//22 Single User
+import { Link } from 'react-router-dom';
+
 // this is stateless so we should convert to functional component
 // Change to function ES6 and remove render since it's now functoin which will have only return
 // this will no longer need and need to pass props
@@ -21,9 +24,11 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
         />
         <h3>{login}</h3>
         <div>
-          <a href={html_url} className='btn btn-dark btn-sm my-1'>
+          {/* 22 Single User */}
+          {/* <a href={html_url} className='btn btn-dark btn-sm my-1'> */}
+          <Link to={`/user/${login}`} className='btn btn-dark btn-sm my-1'>
             More
-          </a>
+          </Link>
         </div>
       </div>
     );

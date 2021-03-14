@@ -11,10 +11,14 @@ import Alert from "./components/layout/Alert";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/pages/About";
 
+//22
+import User from "./components/users/User"
+
 class App extends Component {
 
   state = {
     users: [],
+    user: {},
     loading: false, // to use for showing loading progress
     alert: null
   }
@@ -47,6 +51,20 @@ class App extends Component {
     
   };
 
+  //22
+  //Get single Github yser
+  getUser = async (username) => {
+
+    this.setState({ loading: true })
+
+    const res = await axios.get(`https://api.github.com/users/${username}?client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+
+    console.log(res.data);
+
+    this.setState({ user: res.data, loading: false })
+
+  }
+
   // Clear users from state
   clearUsers = () => this.setState({ users:[], loading: false });
 
@@ -60,7 +78,7 @@ class App extends Component {
   render() {
     // const numbers = [1,2,3];
 
-    const { users, loading } = this.state;
+    const { users, user, loading } = this.state;
     return (
       //21 React Router Add
       <Router>
@@ -89,6 +107,10 @@ class App extends Component {
                 </Fragment>
               )} />
               <Route exact path="/about" component={About} />
+              {/* 22 add single user page */}
+              <Route exact path="/user/:login" render={props => (
+                <User { ...props } getUser={this.getUser} user={user} loading={loading}/>
+              )} />
             </Switch>
 
           </div>
