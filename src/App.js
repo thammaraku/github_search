@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
 // import UserItem from "./components/users/UserItem";
@@ -7,6 +7,9 @@ import Search from "./components/users/Search";
 import axios from "axios";
 import Alert from "./components/layout/Alert";
 
+//21 Router
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import About from "./components/pages/About";
 
 class App extends Component {
 
@@ -59,25 +62,38 @@ class App extends Component {
 
     const { users, loading } = this.state;
     return (
-      <div className='App'>
-        {/* <Navbar title="Github Finder" icon="fab fa-github"/> */}
-        <Navbar />
-        <div className='container'>
-          <Alert alert={this.state.alert} />
-          {/* <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={ this.state.users.length > 0 ? true : false }/> */}
-          <Search 
-            searchUsers={this.searchUsers} 
-            clearUsers={this.clearUsers} 
-            showClear={ users.length > 0 ? true : false }
-            setAlert={this.setAlert}
-          />
-          {/* <UserItem /> */}
-          {/* pass loading and users as props*/}
-          {/* <Users loading={this.state.loading} users={this.state.users} /> */}
-          <Users loading={loading} users={users} />
-          {/* <Navbar title={numbers} /> */}
+      //21 React Router Add
+      <Router>
+        <div className='App'>
+          {/* <Navbar title="Github Finder" icon="fab fa-github"/> */}
+          <Navbar />
+          <div className='container'>
+
+            <Alert alert={this.state.alert} />
+            {/* 21 Router add switch to add an extra page */}
+            <Switch>
+              <Route exact path="/" render={props => (
+                <Fragment>
+                  <Search 
+                    searchUsers={this.searchUsers} 
+                    clearUsers={this.clearUsers} 
+                    showClear={ users.length > 0 ? true : false }
+                    setAlert={this.setAlert}
+                  />
+                  {/* <UserItem /> */}
+                  {/* pass loading and users as props*/}
+                  {/* <Users loading={this.state.loading} users={this.state.users} /> */}
+                  <Users loading={loading} users={users} />
+                  {/* <Navbar title={numbers} /> */}
+                  {/* <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={ this.state.users.length > 0 ? true : false }/> */}
+                </Fragment>
+              )} />
+              <Route exact path="/about" component={About} />
+            </Switch>
+
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
