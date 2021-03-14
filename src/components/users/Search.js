@@ -10,9 +10,11 @@ export class Search extends Component {
     };
 
     static propTypes = {
+        // type ptfr
         searchUsers: PropTypes.func.isRequired,
         clearUsers: PropTypes.func.isRequired,
         showClear: PropTypes.bool.isRequired,
+        setAlert: PropTypes.func.isRequired,
     };
 
     // incase we have multiple input so use this so you don't need to have onChange for every field
@@ -28,9 +30,17 @@ export class Search extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        console.log(this.state.text);
-        this.props.searchUsers(this.state.text);
-        this.setState({ text: '' });
+
+        // 20 Alert
+        if(this.state.text === "") {
+            this.props.setAlert("Please enter something", "light")
+        } else {
+            console.log(this.state.text);
+            this.props.searchUsers(this.state.text);
+            this.setState({ text: '' });
+
+        }
+
     }
 
     render() {
