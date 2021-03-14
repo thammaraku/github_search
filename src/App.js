@@ -7,7 +7,7 @@ import Search from "./components/users/Search";
 import axios from "axios";
 import Alert from "./components/layout/Alert";
 
-//21 Router
+// 21 React Router Add
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/pages/About";
 
