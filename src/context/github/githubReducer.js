@@ -1,0 +1,1 @@
+// function to decide what will happened with state based on action
